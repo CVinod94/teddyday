@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Teddy Day Hug</title>
+
 <style>
 body {
     margin: 0;
@@ -20,9 +21,22 @@ h2 {
     color: #d63384;
 }
 
-.teddy {
-    width: 250px;
+/* Gift box */
+.gift {
+    width: 200px;
     cursor: pointer;
+    transition: transform 0.4s;
+}
+
+.gift.open {
+    transform: scale(1.1) rotate(10deg);
+}
+
+/* Teddy */
+.teddy {
+    width: 260px;
+    display: none;
+    margin-top: 20px;
     transition: transform 0.5s;
 }
 
@@ -36,12 +50,15 @@ h2 {
     color: #c2185b;
     min-height: 40px;
 }
+
+/* Hearts */
 .heart {
     position: absolute;
     color: red;
     font-size: 20px;
     animation: float 4s linear infinite;
 }
+
 @keyframes float {
     from {transform: translateY(0); opacity:1;}
     to {transform: translateY(-600px); opacity:0;}
@@ -51,24 +68,40 @@ h2 {
 <body>
 
 <div class="container">
-    <h2>Tap the Teddy for a Hug 🧸</h2>
-    <img src="https://i.imgur.com/8Km9tLL.png" class="teddy" id="teddy">
+    <h2>Tap the Gift 🎁</h2>
+
+    <!-- Gift -->
+    <img src="gift.png" class="gift" id="gift">
+
+    <!-- Teddy -->
+    <img src="teddy.png" class="teddy" id="teddy">
+
     <div class="message" id="message"></div>
 </div>
 
+<!-- Background Music -->
+<audio id="music" src="music.mp3" loop></audio>
+
 <script>
+const gift = document.getElementById("gift");
 const teddy = document.getElementById("teddy");
 const message = document.getElementById("message");
+const music = document.getElementById("music");
 
 const lines = [
     "Here’s a warm teddy hug for you…",
     "Soft, cute, and full of love…",
     "Just like how you make my life feel.",
-    "Happy Teddy Day ❤️"
+    "Happy Teddy Day kiki ❤️"
 ];
 
-teddy.onclick = () => {
+gift.onclick = () => {
+    gift.classList.add("open");
+    gift.style.display = "none";
+    teddy.style.display = "block";
     teddy.classList.add("hug");
+
+    music.play();
     showMessage();
     createHearts();
 };
@@ -76,4 +109,27 @@ teddy.onclick = () => {
 function showMessage() {
     let i = 0;
     function typeLine() {
-        if (i < lines.len
+        if (i < lines.length) {
+            message.textContent = lines[i];
+            i++;
+            setTimeout(typeLine, 2000);
+        }
+    }
+    typeLine();
+}
+
+function createHearts() {
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = window.innerHeight + "px";
+        heart.textContent = "❤";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+    }, 300);
+}
+</script>
+
+</body>
+</html>
