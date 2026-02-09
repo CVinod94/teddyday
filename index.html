@@ -2,11 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Teddy Day Hug</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teddy Day</title>
 
 <style>
 body {
     margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: linear-gradient(to bottom, #ffe6f0, #fff0f5);
     font-family: 'Segoe UI', sans-serif;
     text-align: center;
@@ -14,93 +19,49 @@ body {
 }
 
 .container {
-    margin-top: 80px;
+    padding: 20px;
 }
 
-h2 {
+h1 {
     color: #d63384;
+    font-size: 36px;
+    margin-bottom: 20px;
 }
 
-.gift, .teddy {
-    width: 240px;
-    cursor: pointer;
-    transition: transform 0.5s;
-}
-
-.teddy {
-    display: none;
-}
-
-.hug {
-    transform: scale(1.2);
-}
-
-.message {
-    margin-top: 30px;
-    font-size: 28px;
+p {
     color: #c2185b;
+    font-size: 20px;
+    margin-bottom: 40px;
 }
 
-/* Floating hearts */
-.heart {
-    position: absolute;
-    color: red;
-    font-size: 22px;
-    animation: float 4s linear infinite;
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    background: #ff4d88;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: 0.3s;
 }
 
-@keyframes float {
-    from {transform: translateY(0); opacity:1;}
-    to {transform: translateY(-600px); opacity:0;}
+button:hover {
+    transform: scale(1.05);
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Tap the Gift 🎁</h2>
-
-    <!-- Gift -->
-    <img src="gift.png" id="gift" class="gift">
-
-    <!-- Teddy -->
-    <img src="teddy.png" id="teddy" class="teddy">
-
-    <div class="message" id="message"></div>
+    <h1>For You, Kiki ❤️</h1>
+    <p>A small teddy hug is waiting for you…</p>
+    <button onclick="goNext()">Open Your Gift 🎁</button>
 </div>
 
-<!-- Music (filename matches your repo) -->
-<audio id="music" src="Yaanji.mp3" loop autoplay muted></audio>
-
 <script>
-const gift = document.getElementById("gift");
-const teddy = document.getElementById("teddy");
-const message = document.getElementById("message");
-const music = document.getElementById("music");
-
-gift.onclick = () => {
-    gift.style.display = "none";
-    teddy.style.display = "block";
-    teddy.classList.add("hug");
-
-    // Unmute and play music after click
-    music.muted = false;
-    music.play().catch(()=>{});
-
-    message.textContent = "Happy Teddy Day Kiki ❤️";
-    createHearts();
-};
-
-function createHearts() {
-    setInterval(() => {
-        const heart = document.createElement("div");
-        heart.className = "heart";
-        heart.style.left = Math.random() * window.innerWidth + "px";
-        heart.style.top = window.innerHeight + "px";
-        heart.textContent = "❤";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 4000);
-    }, 300);
+function goNext() {
+    window.location.href = "gift.html";
 }
 </script>
 
