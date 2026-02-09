@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Teddy Day Hug</title>
+<style>
+body {
+    margin: 0;
+    background: linear-gradient(to bottom, #ffe6f0, #fff0f5);
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    overflow: hidden;
+}
+
+.container {
+    margin-top: 80px;
+}
+
+h2 {
+    color: #d63384;
+}
+
+.teddy {
+    width: 250px;
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+
+.hug {
+    transform: scale(1.2);
+}
+
+.message {
+    margin-top: 30px;
+    font-size: 24px;
+    color: #c2185b;
+    min-height: 40px;
+}
+.heart {
+    position: absolute;
+    color: red;
+    font-size: 20px;
+    animation: float 4s linear infinite;
+}
+@keyframes float {
+    from {transform: translateY(0); opacity:1;}
+    to {transform: translateY(-600px); opacity:0;}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Tap the Teddy for a Hug 🧸</h2>
+    <img src="https://i.imgur.com/8Km9tLL.png" class="teddy" id="teddy">
+    <div class="message" id="message"></div>
+</div>
+
+<script>
+const teddy = document.getElementById("teddy");
+const message = document.getElementById("message");
+
+const lines = [
+    "Here’s a warm teddy hug for you…",
+    "Soft, cute, and full of love…",
+    "Just like how you make my life feel.",
+    "Happy Teddy Day ❤️"
+];
+
+teddy.onclick = () => {
+    teddy.classList.add("hug");
+    showMessage();
+    createHearts();
+};
+
+function showMessage() {
+    let i = 0;
+    function typeLine() {
+        if (i < lines.len
