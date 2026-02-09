@@ -8,7 +8,7 @@
 <style>
 body {
     margin: 0;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,34 +19,57 @@ body {
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    width: 100%;
+    max-width: 500px;
     padding: 20px;
 }
 
 h2 {
     color: #d63384;
     font-size: 28px;
+    margin-bottom: 20px;
 }
 
+/* Images */
 img {
-    max-width: 80%;
+    width: 100%;
+    max-width: 320px;
     height: auto;
+    display: block;
+    margin: 0 auto;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+/* Opening animation */
+.opening {
+    transform: scale(0.8) rotate(-10deg);
+    opacity: 0;
 }
 
 .teddy {
     display: none;
+    animation: popIn 0.8s ease forwards;
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .message {
-    font-size: 28px;
+    font-size: 26px;
     color: #c2185b;
-    margin-top: 10px;
+    margin-top: 20px;
+    min-height: 60px;
 }
 
-/* Hearts */
+/* Floating hearts */
 .heart {
     position: absolute;
     color: red;
@@ -79,16 +102,35 @@ const teddy = document.getElementById("teddy");
 const message = document.getElementById("message");
 const music = document.getElementById("music");
 
-gift.onclick = () => {
-    gift.style.display = "none";
-    teddy.style.display = "block";
+const text = "Happy Teddy Day Kiki ❤️";
 
+gift.onclick = () => {
+    // play music
     music.muted = false;
     music.play().catch(()=>{});
 
-    message.textContent = "Happy Teddy Day Kiki ❤️";
-    createHearts();
+    // gift opening animation
+    gift.classList.add("opening");
+
+    setTimeout(() => {
+        gift.style.display = "none";
+        teddy.style.display = "block";
+        typeWriter();
+        createHearts();
+    }, 600);
 };
+
+function typeWriter() {
+    let i = 0;
+    function typing() {
+        if (i < text.length) {
+            message.textContent += text.charAt(i);
+            i++;
+            setTimeout(typing, 80);
+        }
+    }
+    typing();
+}
 
 function createHearts() {
     setInterval(() => {
