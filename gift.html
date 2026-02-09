@@ -22,8 +22,10 @@ body {
     width: 100%;
     max-width: 500px;
     padding: 20px;
+    position: relative;
 }
 
+/* Images */
 img {
     width: 100%;
     max-width: 320px;
@@ -33,19 +35,16 @@ img {
     transition: transform 0.6s ease, opacity 0.6s ease;
 }
 
-/* Opening animation */
+/* Gift opening animation */
 .opening {
     transform: scale(0.8) rotate(-10deg);
     opacity: 0;
 }
 
-/* Teddy styling */
+/* Teddy */
 .teddy {
     display: none;
     animation: popIn 0.8s ease forwards;
-    object-fit: cover;
-    height: 320px;
-    object-position: center bottom;
 }
 
 @keyframes popIn {
@@ -59,11 +58,13 @@ img {
     }
 }
 
+/* Message */
 .message {
-    font-size: 26px;
+    font-size: 24px;
     color: #c2185b;
-    margin-top: 20px;
-    min-height: 60px;
+    margin-top: 25px;
+    line-height: 1.6;
+    font-weight: 500;
 }
 
 /* Floating hearts */
@@ -96,32 +97,43 @@ const teddy = document.getElementById("teddy");
 const message = document.getElementById("message");
 const music = document.getElementById("music");
 
-const text = "Happy Teddy Day Kiki ❤️";
+const lines = [
+    "Here’s a warm teddy hug for you…",
+    "Soft, cute, and full of love..",
+    "Just like how you make my life feel.",
+    "Happy Teddy Day ❤️"
+];
 
 gift.onclick = () => {
+    // Play music
     music.muted = false;
     music.play().catch(()=>{});
 
+    // Gift opening animation
     gift.classList.add("opening");
 
     setTimeout(() => {
         gift.style.display = "none";
         teddy.style.display = "block";
-        typeWriter();
+        showLines();
         createHearts();
     }, 600);
 };
 
-function typeWriter() {
+function showLines() {
     let i = 0;
-    function typing() {
-        if (i < text.length) {
-            message.textContent += text.charAt(i);
+
+    function showLine() {
+        if (i < lines.length) {
+            const p = document.createElement("div");
+            p.textContent = lines[i];
+            message.appendChild(p);
             i++;
-            setTimeout(typing, 80);
+            setTimeout(showLine, 1500);
         }
     }
-    typing();
+
+    showLine();
 }
 
 function createHearts() {
