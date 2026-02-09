@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teddy Gift</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #ffe6f0, #fff0f5);
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+h2 {
+    color: #d63384;
+    font-size: 28px;
+}
+
+img {
+    max-width: 80%;
+    height: auto;
+}
+
+.teddy {
+    display: none;
+}
+
+.message {
+    font-size: 28px;
+    color: #c2185b;
+    margin-top: 10px;
+}
+
+/* Hearts */
+.heart {
+    position: absolute;
+    color: red;
+    font-size: 20px;
+    animation: float 4s linear infinite;
+}
+
+@keyframes float {
+    from {transform: translateY(0); opacity:1;}
+    to {transform: translateY(-600px); opacity:0;}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Tap the Gift 🎁</h2>
+
+    <img src="gift.png" id="gift">
+    <img src="teddy.png" id="teddy" class="teddy">
+
+    <div class="message" id="message"></div>
+</div>
+
+<audio id="music" src="Yaanji.mp3" loop autoplay muted></audio>
+
+<script>
+const gift = document.getElementById("gift");
+const teddy = document.getElementById("teddy");
+const message = document.getElementById("message");
+const music = document.getElementById("music");
+
+gift.onclick = () => {
+    gift.style.display = "none";
+    teddy.style.display = "block";
+
+    music.muted = false;
+    music.play().catch(()=>{});
+
+    message.textContent = "Happy Teddy Day Kiki ❤️";
+    createHearts();
+};
+
+function createHearts() {
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = window.innerHeight + "px";
+        heart.textContent = "❤";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+    }, 300);
+}
+</script>
+
+</body>
+</html>
