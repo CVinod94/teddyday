@@ -22,20 +22,44 @@ body {
     width: 100%;
     max-width: 500px;
     padding: 20px;
-    position: relative;
+}
+
+/* Tap text */
+.tap-text {
+    font-size: 26px;
+    color: #d63384;
+    margin-bottom: 20px;
+    animation: fadeGlow 2s infinite alternate;
+}
+
+@keyframes fadeGlow {
+    from { opacity: 0.6; }
+    to { opacity: 1; }
 }
 
 /* Images */
 img {
     width: 100%;
-    max-width: 320px;
+    max-width: 260px;
     height: auto;
     display: block;
     margin: 0 auto;
-    transition: transform 0.6s ease, opacity 0.6s ease;
+    cursor: pointer;
+    transition: transform 0.4s ease, opacity 0.6s ease;
 }
 
-/* Gift opening animation */
+/* Pulsing animation */
+#gift {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
+/* Gift opening */
 .opening {
     transform: scale(0.8) rotate(-10deg);
     opacity: 0;
@@ -84,8 +108,11 @@ img {
 <body>
 
 <div class="container">
+    <div class="tap-text" id="tapText">Tap the gift for a surprise 🎁</div>
+
     <img src="gift.png" id="gift">
     <img src="teddy.png" id="teddy" class="teddy">
+
     <div class="message" id="message"></div>
 </div>
 
@@ -96,6 +123,7 @@ const gift = document.getElementById("gift");
 const teddy = document.getElementById("teddy");
 const message = document.getElementById("message");
 const music = document.getElementById("music");
+const tapText = document.getElementById("tapText");
 
 const lines = [
     "Here’s a warm teddy hug for you…",
@@ -105,12 +133,11 @@ const lines = [
 ];
 
 gift.onclick = () => {
-    // Play music
     music.muted = false;
     music.play().catch(()=>{});
 
-    // Gift opening animation
     gift.classList.add("opening");
+    tapText.style.display = "none";
 
     setTimeout(() => {
         gift.style.display = "none";
