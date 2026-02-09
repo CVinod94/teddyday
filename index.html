@@ -21,23 +21,14 @@ h2 {
     color: #d63384;
 }
 
-/* Gift box */
-.gift {
-    width: 200px;
+.gift, .teddy {
+    width: 240px;
     cursor: pointer;
-    transition: transform 0.4s;
-}
-
-.gift.open {
-    transform: scale(1.1) rotate(10deg);
-}
-
-/* Teddy */
-.teddy {
-    width: 260px;
-    display: none;
-    margin-top: 20px;
     transition: transform 0.5s;
+}
+
+.teddy {
+    display: none;
 }
 
 .hug {
@@ -46,16 +37,15 @@ h2 {
 
 .message {
     margin-top: 30px;
-    font-size: 24px;
+    font-size: 28px;
     color: #c2185b;
-    min-height: 40px;
 }
 
-/* Hearts */
+/* Floating hearts */
 .heart {
     position: absolute;
     color: red;
-    font-size: 20px;
+    font-size: 22px;
     animation: float 4s linear infinite;
 }
 
@@ -71,16 +61,16 @@ h2 {
     <h2>Tap the Gift 🎁</h2>
 
     <!-- Gift -->
-    <img src="gift.png" class="gift" id="gift">
+    <img src="gift.png" id="gift" class="gift">
 
     <!-- Teddy -->
-    <img src="teddy.png" class="teddy" id="teddy">
+    <img src="teddy.png" id="teddy" class="teddy">
 
     <div class="message" id="message"></div>
 </div>
 
-<!-- Background Music -->
-<audio id="music" src="yannji.mp3" loop></audio>
+<!-- Music (filename matches your repo) -->
+<audio id="music" src="Yaanji.mp3" loop autoplay muted></audio>
 
 <script>
 const gift = document.getElementById("gift");
@@ -88,35 +78,18 @@ const teddy = document.getElementById("teddy");
 const message = document.getElementById("message");
 const music = document.getElementById("music");
 
-const lines = [
-    "Here’s a warm teddy hug for you…",
-    "Soft, cute, and full of love…",
-    "Just like how you make my life feel.",
-    "Happy Teddy Day kiki ❤️"
-];
-
 gift.onclick = () => {
-    gift.classList.add("open");
     gift.style.display = "none";
     teddy.style.display = "block";
     teddy.classList.add("hug");
 
-    music.play();
-    showMessage();
+    // Unmute and play music after click
+    music.muted = false;
+    music.play().catch(()=>{});
+
+    message.textContent = "Happy Teddy Day Kiki ❤️";
     createHearts();
 };
-
-function showMessage() {
-    let i = 0;
-    function typeLine() {
-        if (i < lines.length) {
-            message.textContent = lines[i];
-            i++;
-            setTimeout(typeLine, 2000);
-        }
-    }
-    typeLine();
-}
 
 function createHearts() {
     setInterval(() => {
